@@ -1,18 +1,18 @@
 <?php
     include 'config.php';
-    
+
     // Handle delete action
-    if (isset($_GET['delete'])) {
-        $member_id = $_GET['delete'];        
-        $sql = "UPDATE members SET is_delete = 1 WHERE member_id = $member_id";
-        if (mysqli_query($conn, $sql)) {
-            header("Location: members.php?msg=deleted");
+    if (isset($_GET['delete'])){
+        $book_id = $_GET['delete'];
+        $sql = "UPDATE books SET is_delete = 1 WHERE book_id = $book_id";
+        if(mysqli_query($conn,$sql)){
+            header("Location: books.php");
             exit();
         }
     }
 
-    $sql = "SELECT * FROM members WHERE is_delete = 0 ORDER BY created_at DESC";
-    $result = mysqli_query($conn, $sql);
+    $sql = "SELECT * FROM books WHERE is_delete = 0 ORDER BY created_at DESC";
+    $result = mysqli_query($conn,$sql);
     if (!$result) {
         die("Query failed: " . mysqli_error($conn));
     }
@@ -22,7 +22,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Member - Library Management</title>
+    <title>Books - Library Management System</title>
     <style>
         * {
             margin: 0;
@@ -66,7 +66,7 @@
         .container .header .menu a:hover {
             background-color: #3a75b0;
         }
-        .member-container {
+        .book-container {
             width: 80%;
             display: flex;
             flex-direction: column;
@@ -75,7 +75,7 @@
             margin: auto;
 
         }
-        .member-container .member-header {
+        .book-container .book-header {
             width: 100%;
             display: flex;
             justify-content: space-between;
@@ -87,27 +87,24 @@
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
-        .member-container .member-header h2 {
+        .book-container .book-header h2 {
             color: #333;
         }
-        .member-container .member-header .add-member-btn {
+        .book-container .book-header .add-book-btn {
             text-decoration: none;
-            background-color: #4CAF50;
+            background-color: #e06b21;
             color: white;
             padding: 10px 20px;
             border-radius: 5px;
             font-weight: bold;
         }
-        .member-container .member-header .add-member-btn:hover {
-            background-color: #45a049;
+        .book-container .book-header .add-book-btn:hover {
+            background-color: #c25a1a;
         }
-        .member-container .member-list {
+        .book-container .book-list {
             width: 100%;
-            background-color: white;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            border-radius: 8px;
         }
-        .member-container .member-list table {
+        .book-container .book-list table {
             width: 100%; 
             background: white; 
             border-collapse: collapse; 
@@ -115,36 +112,39 @@
             overflow: hidden; 
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
-        .member-container .member-list table th {
-            background-color: #4CAF50;
-            color: white;
-            padding: 12px;
+        .book-container .book-list table th,
+        .book-container .book-list table td {
+            padding: 12px 15px;
             text-align: left;
-        }
-        .member-container .member-list table td {
-            padding: 10px;
             border-bottom: 1px solid #ddd;
+        }   
+        .book-container .book-list table th {
+            background-color: #e06b21;
+            color: white;
         }
-        .member-container .member-list table tr:hover {
+        .book-container .book-list table td {
+            color: #333;
+        }
+         .book-container .book-list table tr:hover {
             background-color: #f1f1f1;
         }
-        .member-container .member-list table a {
+        .book-container .book-list table td a {
             text-decoration: none;
             color: white;
             border-radius: 8px;
             padding: 5px 10px;
             transition: background-color 0.3s, color 0.3s;
         }
-        .member-container .member-list table a.delete-btn {
+        .book-container .book-list table td a.delete-btn {
             background-color: #f44336;
         }
-        .member-container .member-list table a.delete-btn:hover {
+        .book-container .book-list table td a.delete-btn:hover {
             background-color: #da190b;
         }
-        .member-container .member-list table a.edit-btn {
+        .book-container .book-list table td a.edit-btn {
             background-color: #2196F3;
         }
-        .member-container .member-list table a.edit-btn:hover {
+        .book-container .book-list table td a.edit-btn:hover {
             background-color: #0b7dda;
         }
     </style>
@@ -161,44 +161,41 @@
                 </div>
             </div>
         </div>
-        <div class="member-container">
-            <div class="member-header">
-                <h2>Member List</h2>
-                <a href="member_add.php" class="add-member-btn">Add New Member</a>
+        <div class="book-container">
+            <div class="book-header">
+                <h2>Book List</h2>
+                <a href="book_add.php" class="add-book-btn">Add New Book</a>
             </div>
-            <div class="member-list">
-            <?php  if (mysqli_num_rows($result) > 0): ?>
-                <table border="1" cellpadding="10" cellspacing="0">
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Gender</th>
-                        <th>Phone</th>
-                        <th>Email</th>
-                        <th>Address</th>
-                        <th>Actions</th>
-                    </tr>
-                    <?php while($row = mysqli_fetch_assoc($result)): ?>
+            <div class="book-list">
+                <?php if(mysqli_num_rows($result)>0): ?>
+                    <table>
                         <tr>
-                            <td><?php echo $row['member_id']; ?></td>
-                            <td><?php echo $row['full_name']; ?></td>
-                            <td><?php echo $row['gender']; ?></td>
-                            <td><?php echo $row['phone']; ?></td>
-                            <td><?php echo $row['email']; ?></td>
-                            <td><?php echo $row['address']; ?></td>
-                            <td>
-                                <a href="member_edit.php?id=<?php echo $row['member_id']; ?>" class="edit-btn">Edit</a> | 
-                                <a href="members.php?delete=<?php echo $row['member_id']; ?>" onclick="return confirm('Are you sure you want to delete this member?');" class="delete-btn">Delete</a>
-                            </td>
+                            <th>ID</th>
+                            <th>Title</th>
+                            <th>Author</th>
+                            <th>Published Year</th>
+                            <th>Stock</th>
+                            <th>Actions</th>
                         </tr>
-                    <?php endwhile; ?>
-                </table>
-            <?php else: ?>
-                <p>No members found.</p>
-            <?php endif; ?>
-        </div>
+                        <?php while($row = mysqli_fetch_assoc($result)): ?>
+                            <tr>
+                                <td><?php echo $row['book_id']; ?></td>
+                                <td><?php echo $row['title']; ?></td>
+                                <td><?php echo $row['author']; ?></td>
+                                <td><?php echo $row['publish_year']; ?></td>
+                                <td><?php echo $row['stock']; ?></td>
+                                <td>
+                                    <a href="book_edit.php?id=<?php echo $row['book_id']; ?>" class="edit-btn">Edit</a> | 
+                                    <a href="books.php?delete=<?php echo $row['book_id']; ?>" class="delete-btn" onclick="return confirm('Are you sure you want to delete this book?');">Delete</a>
+                                </td>
+                            </tr>
+                        <?php endwhile; ?>
+                    </table>
+                <?php else: ?>
+                    <p>No books found.</p>
+                <?php endif; ?>
+            </div>
         </div>
     </div>
 </body>
 </html>
-<?php mysqli_close($conn); ?>

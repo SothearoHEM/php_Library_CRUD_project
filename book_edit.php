@@ -1,23 +1,36 @@
 <?php
     include 'config.php';
+
     $error = '';
 
-    if ($_SERVER['REQUEST_METHOD']==='POST') {
-        $full_name = $_POST['full_name'];
-        $gender = $_POST['gender'];
-        $email = $_POST['email'];
-        $phone = $_POST['phone'];
-        $address = $_POST['address'];
+    if (!isset($_GET['id'])) {
+        header("Location: books.php");
+        exit();
+    }
+    $book_id = $_GET['id'];
+    $sql = "SELECT * FROM books WHERE book_id=$book_id";
+    $result = mysqli_query($conn, $sql);
+    if (!$result) {
+        die("Error retrieving book: " . mysqli_error($conn));
+    }
+    $book = mysqli_fetch_assoc($result);
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $book_id = $_GET['id'];
+        $title = $_POST['title'];
+        $author = $_POST['author'];
+        $publish_year = $_POST['publish_year'];
+        $price = $_POST['price'];
+        $stock = $_POST['stock'];
 
-        if (empty($full_name) || empty($gender) || empty($email) || empty($phone) || empty($address)) {
+        if (empty($title) || empty($author) || empty($publish_year) || empty($price) || empty($stock)) {
             $error = "All fields are required.";
         } else {
-            $sql = "INSERT INTO members (full_name, gender, email, phone, address) VALUES ('$full_name', '$gender', '$email', '$phone', '$address')";
-            if  (mysqli_query($conn, $sql)) {
-                header("Location: members.php");
+            $sql = "UPDATE books SET title='$title', author='$author', publish_year='$publish_year', price='$price', stock='$stock' WHERE book_id=$book_id";
+            if (mysqli_query($conn, $sql)) {
+                header("Location: books.php");
                 exit();
             } else {
-                die("Error adding member: " . mysqli_error($conn));
+                die("Error updating book: " . mysqli_error($conn));
             }
         }
     }
@@ -27,7 +40,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Member - Library Management</title>
+    <title>Edit Book</title>
     <style>
         * {
             margin: 0;
@@ -71,14 +84,14 @@
         .container .header .menu a:hover {
             background-color: #3a75b0;
         }
-        .add-members-form {
+        .add-books-form {
             display: flex;
             flex-direction: column;
             margin-bottom: 20px;
             margin-top: 30px;
             align-items: center;
         }
-        .add-members-form form {
+        .add-books-form form {
             background-color: white;
             padding: 20px;
             border-radius: 5px;
@@ -86,28 +99,26 @@
             width: 100%;
             max-width: 500px;
         }
-        .add-members-form form h2 {
+        .add-books-form form h2 {
             margin-bottom: 20px;
             color: #333;
             text-align: center;
         }
-        .add-members-form form label {
+        .add-books-form form label {
             display: block;
             margin-bottom: 5px;
             font-weight: bold;
         }
-        .add-members-form form input[type="text"],
-        .add-members-form form input[type="email"],
-        .add-members-form form select,
-        .add-members-form form textarea {
+        .add-books-form form input[type="text"],
+        .add-books-form form input[type="number"] {
             width: 100%;
             padding: 8px;
             margin-bottom: 15px;
             border: 1px solid #ccc;
             border-radius: 4px;
         }
-        .add-members-form form input[type="submit"],
-        .add-members-form form a {
+        .add-books-form form input[type="submit"],
+        .add-books-form form a {
             text-decoration: none;
             color: white;
             background-color: #2195f3cb;
@@ -117,13 +128,13 @@
             margin-right: 10px;
             border: none;
         }
-        .add-members-form form a.cancel-btn {
+        .add-books-form form a.cancel-btn {
             background-color: #f44336;
         }
-        .add-members-form form a.cancel-btn:hover {
+        .add-books-form form a.cancel-btn:hover {
             background-color: #d32f2f;
         }
-        .add-members-form form input[type="submit"]:hover {
+        .add-books-form form input[type="submit"]:hover {
             background-color: #3a75b0;
         }
     </style>
@@ -140,33 +151,29 @@
                 </div>
             </div>
         </div>
-        <div class="add-members-form">
-            <form method="post" action="">
-                <h2>Add New Member</h2>
-                <?php if (!empty($error)): ?>
-                    <p style="color: red; text-align: center; margin-top: 10px;"><?php echo $error; ?></p>
+        <div class="add-books-form">
+            <form method="POST" action="">
+                <h2>Edit Book</h2>
+                <?php if ($error): ?>
+                    <p style="color: red;"><?php echo $error; ?></p>
                 <?php endif; ?>
-                <label for="full_name">Full Name:</label>
-                <input type="text" id="full_name" name="full_name" required><br><br>
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" value="<?php echo ($book['title']); ?>" required>
 
-                <label for="gender">Gender:</label>
-                <select id="gender" name="gender" required>
-                    <option value="">Select Gender</option>
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                </select><br><br>
+                <label for="author">Author:</label>
+                <input type="text" id="author" name="author" value="<?php echo ($book['author']); ?>" required>
 
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required><br><br>
+                <label for="publish_year">Published Year:</label>
+                <input type="number" id="publish_year" name="publish_year" value="<?php echo ($book['publish_year']); ?>" required>
 
-                <label for="phone">Phone:</label>
-                <input type="text" id="phone" name="phone" required><br><br>
+                <label for="price">Price:</label>
+                <input type="number" id="price" name="price" step="0.01" value="<?php echo ($book['price']); ?>" required>
 
-                <label for="address">Address:</label>
-                <textarea id="address" name="address" required></textarea><br><br>
+                <label for="stock">Stock:</label>
+                <input type="number" id="stock" name="stock" value="<?php echo ($book['stock']); ?>" required>
 
-                <input type="submit" value="Add Member">
-                <a href="members.php" class="cancel-btn">Cancel</a>
+                <input type="submit" value="Update Book">
+                <a href="books.php" class="cancel-btn">Cancel</a>
             </form>
         </div>
     </div>
