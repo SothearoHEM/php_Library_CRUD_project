@@ -12,6 +12,34 @@
             die("Error deleting borrow record: " . mysqli_error($conn));
         }
     }
+    // Handle return action
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['borrow_id'])) {
+        $borrow_id = $_POST['borrow_id'];
+        
+        // Get all borrowed books and their quantities
+        $details_sql = "SELECT book_id, qty FROM borrow_details WHERE borrow_id = $borrow_id";
+        $details_result = mysqli_query($conn, $details_sql);
+        
+        if ($details_result) {
+            // Update stock for each book
+            while ($detail = mysqli_fetch_assoc($details_result)) {
+                $book_id = $detail['book_id'];
+                $quantity = $detail['qty'];
+                $update_stock_sql = "UPDATE books SET stock = stock + $quantity WHERE book_id = $book_id";
+                if (!mysqli_query($conn, $update_stock_sql)) {
+                    die("Error updating book stock: " . mysqli_error($conn));
+                }
+            }
+        }
+        
+        $sql = "UPDATE borrows SET status = 'Returned', return_date = NOW() WHERE borrow_id = $borrow_id";
+        if (mysqli_query($conn, $sql)) {
+            header("Location: borrows.php?msg=returned");
+            exit();
+        } else {
+            die("Error updating borrow record: " . mysqli_error($conn));
+        }
+    }
         $sql = "SELECT b.borrow_id,
                m.full_name AS member_name,
                b.borrow_date,
@@ -214,9 +242,9 @@
                                 <td class="actions">
                                     <a href="borrow_details.php?id=<?= $row['borrow_id'] ?>" class="view-btn">View</a>
                                     <?php if ($row['status'] === 'Borrowed'): ?>
-                                        <form method="POST" action="" style="display:inline;">
+                                        <form method="POST" action="borrows.php" style="display:inline;">
                                             <input type="hidden" name="borrow_id" value="<?= $row['borrow_id'] ?>">
-                                            <input type="submit" value="Return" class="return-btn">
+                                            <input type="submit" value="Return" class="return-btn" onclick="return confirm('Are you sure you want to mark this borrow record as returned?');">
                                         </form>
                                     <?php endif; ?>
                                     <a href="borrows.php?delete=<?= $row['borrow_id'] ?>" class="delete-btn" onclick="return confirm('Are you sure you want to delete this borrow record?');">Delete</a>
