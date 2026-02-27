@@ -1,0 +1,701 @@
+/* ===========================
+   Global / Reset
+   =========================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+}
+
+/* ===========================
+   Header
+   =========================== */
+.container {
+    margin: 0 auto;
+}
+.container .header {
+    display: flex;
+    background-color: #4d4d4d76;
+    padding: 20px 0;
+    align-items: center;
+}
+.container .header .header-container {
+    display: flex;
+    width: 80%;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 auto;
+}
+.container .header h1 {
+    color: #262424;
+    border-bottom: 3px solid #2196F3;
+    padding-bottom: 10px;
+}
+.container .header .menu a {
+    text-decoration: none;
+    color: white;
+    background-color: #2195f3cb;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-weight: bold;
+    margin-left: 15px;
+}
+.container .header .menu a:hover {
+    background-color: #3a75b0;
+}
+
+/* ===========================
+   Error Message
+   =========================== */
+.error-msg {
+    color: red;
+    text-align: center;
+    margin-top: 10px;
+}
+
+/* ===========================
+   Members List Page
+   =========================== */
+.member-container {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    align-items: center;
+    margin: auto;
+}
+.member-container .member-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    margin-top: 30px;
+    background-color: #ffffff76;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+.member-container .member-header h2 {
+    color: #333;
+}
+.member-container .member-header .add-member-btn {
+    text-decoration: none;
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+.member-container .member-header .add-member-btn:hover {
+    background-color: #45a049;
+}
+.member-container .member-list {
+    width: 100%;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    border-radius: 8px;
+}
+.member-container .member-list table {
+    width: 100%;
+    background: white;
+    border-collapse: collapse;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.member-container .member-list table th {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px;
+    text-align: left;
+}
+.member-container .member-list table td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+.member-container .member-list table tr:hover {
+    background-color: #f1f1f1;
+}
+.member-container .member-list table a {
+    text-decoration: none;
+    color: white;
+    border-radius: 8px;
+    padding: 5px 10px;
+    transition: background-color 0.3s, color 0.3s;
+}
+.member-container .member-list table a.delete-btn {
+    background-color: #f44336;
+}
+.member-container .member-list table a.delete-btn:hover {
+    background-color: #da190b;
+}
+.member-container .member-list table a.edit-btn {
+    background-color: #2196F3;
+}
+.member-container .member-list table a.edit-btn:hover {
+    background-color: #0b7dda;
+}
+
+/* ===========================
+   Add/Edit Member Form
+   =========================== */
+.add-members-form {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    margin-top: 30px;
+    align-items: center;
+}
+.add-members-form form {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+}
+.add-members-form form h2 {
+    margin-bottom: 20px;
+    color: #333;
+    text-align: center;
+}
+.add-members-form form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+.add-members-form form input[type="text"],
+.add-members-form form input[type="email"],
+.add-members-form form select,
+.add-members-form form textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.add-members-form form input[type="submit"],
+.add-members-form form a {
+    text-decoration: none;
+    color: white;
+    background-color: #2195f3cb;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-weight: bold;
+    margin-right: 10px;
+    border: none;
+}
+.add-members-form form a.cancel-btn {
+    background-color: #f44336;
+}
+.add-members-form form a.cancel-btn:hover {
+    background-color: #d32f2f;
+}
+.add-members-form form input[type="submit"]:hover {
+    background-color: #3a75b0;
+}
+
+/* ===========================
+   Books List Page
+   =========================== */
+.book-container {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    align-items: center;
+    margin: auto;
+}
+.book-container .book-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    margin-top: 30px;
+    background-color: #ffffff76;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+.book-container .book-header h2 {
+    color: #333;
+}
+.book-container .book-header .add-book-btn {
+    text-decoration: none;
+    background-color: #e06b21;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+.book-container .book-header .add-book-btn:hover {
+    background-color: #c25a1a;
+}
+.book-container .book-list {
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    width: 100%;
+}
+.book-container .book-list table {
+    width: 100%;
+    background: white;
+    border-collapse: collapse;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.book-container .book-list table th,
+.book-container .book-list table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+.book-container .book-list table th {
+    background-color: #e06b21;
+    color: white;
+}
+.book-container .book-list table td {
+    color: #333;
+}
+.book-container .book-list table tr:hover {
+    background-color: #f1f1f1;
+}
+.book-container .book-list table td a {
+    text-decoration: none;
+    color: white;
+    border-radius: 8px;
+    padding: 5px 10px;
+    transition: background-color 0.3s, color 0.3s;
+}
+.book-container .book-list table td a.delete-btn {
+    background-color: #f44336;
+}
+.book-container .book-list table td a.delete-btn:hover {
+    background-color: #da190b;
+}
+.book-container .book-list table td a.edit-btn {
+    background-color: #2196F3;
+}
+.book-container .book-list table td a.edit-btn:hover {
+    background-color: #0b7dda;
+}
+
+/* ===========================
+   Add/Edit Book Form
+   =========================== */
+.add-books-form {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    margin-top: 30px;
+    align-items: center;
+}
+.add-books-form form {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+}
+.add-books-form form h2 {
+    margin-bottom: 20px;
+    color: #333;
+    text-align: center;
+}
+.add-books-form form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+.add-books-form form input[type="text"],
+.add-books-form form input[type="number"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.add-books-form form input[type="submit"],
+.add-books-form form a {
+    text-decoration: none;
+    color: white;
+    background-color: #2195f3cb;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-weight: bold;
+    margin-right: 10px;
+    border: none;
+}
+.add-books-form form a.cancel-btn {
+    background-color: #f44336;
+}
+.add-books-form form a.cancel-btn:hover {
+    background-color: #d32f2f;
+}
+.add-books-form form input[type="submit"]:hover {
+    background-color: #3a75b0;
+}
+
+/* ===========================
+   Borrows List Page
+   =========================== */
+.borrow-container {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    align-items: center;
+    margin: auto;
+}
+.borrow-container .borrow-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    margin-top: 30px;
+    background-color: #ffffff76;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+.borrow-container .borrow-header h2 {
+    color: #333;
+}
+.borrow-container .borrow-header .add-borrow-btn {
+    text-decoration: none;
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+.borrow-container .borrow-header .add-borrow-btn:hover {
+    background-color: #45a049;
+}
+.borrow-container .borrow-list {
+    width: 100%;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    border-radius: 8px;
+}
+.borrow-container .borrow-list table {
+    width: 100%;
+    background: white;
+    border-collapse: collapse;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.borrow-container .borrow-list table th {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px;
+    text-align: left;
+}
+.borrow-container .borrow-list table td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+.borrow-container .borrow-list table tr:hover {
+    background-color: #f1f1f1;
+}
+.borrow-container .borrow-list table a {
+    text-decoration: none;
+    color: white;
+    border-radius: 8px;
+    padding: 5px 10px;
+    transition: background-color 0.3s, color 0.3s;
+}
+.borrow-container .borrow-list table a.view-btn {
+    background-color: #2196F3;
+}
+.borrow-container .borrow-list table a.view-btn:hover {
+    background-color: #1976D2;
+}
+.borrow-container .borrow-list table input.return-btn {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+.borrow-container .borrow-list table input.return-btn:hover {
+    background-color: #45a049;
+}
+.borrow-container .borrow-list table a.delete-btn {
+    background-color: #f44336;
+}
+.borrow-container .borrow-list table a.delete-btn:hover {
+    background-color: #da190b;
+}
+
+/* ===========================
+   Add Borrow Form
+   =========================== */
+.form-container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    margin-top: 30px;
+    align-items: center;
+}
+.form-container form {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 80%;
+}
+.form-container form h2 {
+    margin-bottom: 20px;
+    text-align: center;
+    color: #333;
+}
+.member-name-borrow-date {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    gap: 15px;
+}
+.member-name-borrow-date label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+.member-name-borrow-date select,
+.member-name-borrow-date input[type="datetime-local"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+}
+.total-books {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+.total-books .book-to-borrow {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.total-books .book-to-borrow label {
+    margin-right: 10px;
+    font-weight: bold;
+}
+.total-books .book-to-borrow select,
+.total-books .book-to-borrow input[type="number"],
+.total-books .book-to-borrow input[type="text"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+.total-books button {
+    padding: 10px 15px;
+    width: fit-content;
+    background-color: #2195f3cb;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+.total-books button:hover {
+    background-color: #3a75b0;
+}
+.total-books button.remove-row {
+    background-color: #f44336;
+    padding: 8px 12px;
+    margin-bottom: 0;
+}
+.total-books button.remove-row:hover {
+    background-color: #da190b;
+}
+.form-container form input[type="submit"] {
+    text-decoration: none;
+    color: white;
+    background-color: #2195f3cb;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-weight: bold;
+    margin-right: 10px;
+    border: none;
+}
+.form-container form input[type="submit"]:hover {
+    background-color: #3a75b0;
+}
+.form-container form a.cancel-btn {
+    text-decoration: none;
+    color: white;
+    background-color: #f44336;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+.form-container form a.cancel-btn:hover {
+    background-color: #d32f2f;
+}
+
+/* ===========================
+   Borrow Details Page
+   =========================== */
+.details-container {
+    width: 80%;
+    margin: 30px auto;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+.details-container h2 {
+    margin-bottom: 15px;
+    color: #333;
+}
+.details-container .meta {
+    margin-bottom: 20px;
+    color: #555;
+}
+.details-container table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.details-container th,
+.details-container td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+.details-container th {
+    background-color: #4CAF50;
+    color: white;
+}
+.details-container tr:hover {
+    background-color: #f1f1f1;
+}
+.details-container .actions {
+    margin-top: 20px;
+}
+.details-container .actions a {
+    text-decoration: none;
+    color: white;
+    background-color: #2195f3cb;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+.details-container .actions a:hover {
+    background-color: #3a75b0;
+}
+
+/* ===========================
+   DataTables Custom Styling
+   =========================== */
+.dataTables_wrapper {
+    padding: 20px;
+}
+.dataTables_wrapper .dataTables_length select {
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    margin: 0 5px;
+    outline: none;
+}
+.dataTables_wrapper .dataTables_length select:focus {
+    border-color: #4CAF50;
+    box-shadow: 0 0 4px rgba(76, 175, 80, 0.3);
+}
+.dataTables_wrapper .dataTables_filter input {
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-left: 8px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+.dataTables_wrapper .dataTables_filter input:focus {
+    border-color: #4CAF50;
+    box-shadow: 0 0 4px rgba(76, 175, 80, 0.3);
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    padding: 6px 14px !important;
+    margin: 0 3px;
+    border: 1px solid #ddd !important;
+    border-radius: 4px !important;
+    background: #fff !important;
+    color: #333 !important;
+    transition: all 0.3s;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    background: #4CAF50 !important;
+    color: #fff !important;
+    border-color: #4CAF50 !important;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+    background: #4CAF50 !important;
+    color: #fff !important;
+    border-color: #4CAF50 !important;
+    font-weight: bold;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+.dataTables_wrapper .dataTables_info {
+    color: #666;
+    padding-top: 12px;
+    font-size: 14px;
+}
+.dataTables_wrapper .dataTables_length,
+.dataTables_wrapper .dataTables_filter {
+    margin-bottom: 15px;
+    font-size: 14px;
+    color: #555;
+}
+table.dataTable thead .sorting::after,
+table.dataTable thead .sorting_asc::after,
+table.dataTable thead .sorting_desc::after {
+    opacity: 0.8;
+}
+table.dataTable thead th {
+    border-bottom: none !important;
+}
+table.dataTable.no-footer {
+    border-bottom: none;
+}
+
+/* Books page DataTables accent override */
+.book-container .dataTables_wrapper .dataTables_length select:focus {
+    border-color: #e06b21;
+    box-shadow: 0 0 4px rgba(224, 107, 33, 0.3);
+}
+.book-container .dataTables_wrapper .dataTables_filter input:focus {
+    border-color: #e06b21;
+    box-shadow: 0 0 4px rgba(224, 107, 33, 0.3);
+}
+.book-container .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    background: #e06b21 !important;
+    color: #fff !important;
+    border-color: #e06b21 !important;
+}
+.book-container .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+    background: #e06b21 !important;
+    color: #fff !important;
+    border-color: #e06b21 !important;
+}

@@ -6,12 +6,12 @@
 		exit();
 	}
 
-	$borrow_id = $_GET['id'];
+	$borrow_id = mysqli_real_escape_string($conn, $_GET['id']);
 
 	$borrow_sql = "SELECT b.borrow_id, b.borrow_date, b.return_date, b.total_books, b.status, m.full_name AS member_name
 		FROM borrows b
 		JOIN members m ON b.member_id = m.member_id
-		WHERE b.borrow_id = $borrow_id AND b.is_delete = 0";
+		WHERE b.borrow_id = '$borrow_id' AND b.is_delete = 0";
 	$borrow_result = mysqli_query($conn, $borrow_sql);
 	if (!$borrow_result) {
 		die("Error retrieving borrow record: " . mysqli_error($conn));
@@ -25,7 +25,7 @@
 	$details_sql = "SELECT bd.book_id, bd.qty, bd.unit_price, bd.amount, bk.title
 		FROM borrow_details bd
 		JOIN books bk ON bd.book_id = bk.book_id
-		WHERE bd.borrow_id = $borrow_id";
+		WHERE bd.borrow_id = '$borrow_id'";
 	$details_result = mysqli_query($conn, $details_sql);
 	if (!$details_result) {
 		die("Error retrieving borrow details: " . mysqli_error($conn));
@@ -37,101 +37,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Borrow Details</title>
-	<style>
-		* {
-			margin: 0;
-			padding: 0;
-			box-sizing: border-box; 
-		}
-		body {
-			font-family: Arial, sans-serif;
-			background-color: #f0f0f0;
-		}
-		.container {
-			margin: 0 auto;
-		}
-		.container .header {    
-			display: flex;
-			background-color: #4d4d4d76;
-			padding: 20px 0;
-			align-items: center;
-		}
-		.container .header .header-container {
-			display: flex;
-			width: 80%;
-			justify-content: space-between;
-			align-items: center;
-			margin: 0 auto;
-		} 
-		.container .header h1 {
-			color: #262424;
-			border-bottom: 3px solid #2196F3;
-			padding-bottom: 10px;
-		}
-		.container .header .menu a {
-			text-decoration: none;
-			color: white;
-			background-color: #2195f3cb;
-			padding: 10px 20px;
-			border-radius: 5px;
-			font-weight: bold;
-			margin-left: 15px;
-		}
-		.container .header .menu a:hover {
-			background-color: #3a75b0;
-		}
-		.details-container {
-			width: 80%;
-			margin: 30px auto;
-			background-color: #ffffff;
-			padding: 20px;
-			border-radius: 8px;
-			box-shadow: 0 0 10px rgba(0,0,0,0.1);
-		}
-		.details-container h2 {
-			margin-bottom: 15px;
-			color: #333;
-		}
-		.details-container .meta {
-			margin-bottom: 20px;
-			color: #555;
-		}
-		.details-container table {
-			width: 100%;
-			border-collapse: collapse;
-			background: white;
-			border-radius: 8px;
-			overflow: hidden;
-			box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-		}
-		.details-container th,
-		.details-container td {
-			padding: 12px 15px;
-			text-align: left;
-			border-bottom: 1px solid #ddd;
-		}
-		.details-container th {
-			background-color: #4CAF50;
-			color: white;
-		}
-		.details-container tr:hover {
-			background-color: #f1f1f1;
-		}
-		.details-container .actions {
-			margin-top: 20px;
-		}
-		.details-container .actions a {
-			text-decoration: none;
-			color: white;
-			background-color: #2195f3cb;
-			padding: 10px 15px;
-			border-radius: 5px;
-			font-weight: bold;
-		}
-		.details-container .actions a:hover {
-			background-color: #3a75b0;
-		}
-	</style>
+	<link rel="stylesheet" href="style.css">
 </head>
 <body>
 	<div class="container">

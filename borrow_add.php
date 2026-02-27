@@ -4,8 +4,8 @@
     $error = '';
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $member_id = $_POST['member_id'];
-        $borrow_date = $_POST['borrow_date'];
+        $member_id = mysqli_real_escape_string($conn, $_POST['member_id']);
+        $borrow_date = mysqli_real_escape_string($conn, $_POST['borrow_date']);
         $book_ids = isset($_POST['book_id']) ? $_POST['book_id'] : [];
         $quantities = isset($_POST['quantity']) ? $_POST['quantity'] : [];
         $unit_prices = isset($_POST['unit_price']) ? $_POST['unit_price'] : [];
@@ -25,7 +25,7 @@
                 // Aggregate duplicate books by summing quantities
                 $book_data = [];
                 for ($i = 0; $i < count($book_ids); $i++) {
-                    $book_id = $book_ids[$i];
+                    $book_id = mysqli_real_escape_string($conn, $book_ids[$i]);
                     $quantity = (int)$quantities[$i];
                     $unit_price = (float)$unit_prices[$i];
                     if (empty($book_id) || $quantity <= 0 || $unit_price <= 0) {
@@ -52,7 +52,7 @@
                         die("Error adding borrow detail: " . mysqli_error($conn));
                     }
                     // Update book stock
-                    $update_stock_sql = "UPDATE books SET stock = stock - {$data['qty']} WHERE book_id = $book_id";
+                    $update_stock_sql = "UPDATE books SET stock = stock - {$data['qty']} WHERE book_id = '$book_id'";
                     if (!mysqli_query($conn, $update_stock_sql)) {
                         die("Error updating book stock: " . mysqli_error($conn));
                     }
@@ -72,154 +72,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Borrow Record</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box; 
-        }
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-        }
-        .container {
-            margin: 0 auto;
-        }
-        .container .header {    
-            display: flex;
-            background-color: #4d4d4d76;
-            padding: 20px 0;
-            align-items: center;
-        }
-        .container .header .header-container {
-            display: flex;
-            width: 80%;
-            justify-content: space-between;
-            align-items: center;
-            margin: 0 auto;
-        } 
-        .container .header h1 {
-            color: #262424;
-            border-bottom: 3px solid #2196F3;
-            padding-bottom: 10px;
-        }
-        .container .header .menu a {
-            text-decoration: none;
-            color: white;
-            background-color: #2195f3cb;
-            padding: 10px 20px;
-            border-radius: 5px;
-            font-weight: bold;
-            margin-left: 15px;
-        }
-        .container .header .menu a:hover {
-            background-color: #3a75b0;
-        }
-        .form-container {
-            display: flex;
-            flex-direction: column;
-            margin-bottom: 20px;
-            margin-top: 30px;
-            align-items: center;
-        }
-        .form-container form {
-            background-color: white;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 80%;
-        }
-        .form-container form h2 {
-            margin-bottom: 20px;
-            text-align: center;
-            color: #333;
-        }
-        .member-name-borrow-date {
-            display: flex;
-            flex-direction: column;
-            margin-bottom: 20px;
-            gap: 15px;
-        }
-        .member-name-borrow-date label {
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-        .member-name-borrow-date select,
-        .member-name-borrow-date input[type="datetime-local"] {
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            width: 100%;
-        }
-        .total-books {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-        .total-books .book-to-borrow {
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-        .total-books .book-to-borrow label {
-            margin-right: 10px;
-            font-weight: bold;
-        }
-        .total-books .book-to-borrow select,
-        .total-books .book-to-borrow input[type="number"],
-        .total-books .book-to-borrow input[type="text"] {
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            margin-right: 10px;
-        }
-        .total-books button {
-            padding: 10px 15px;
-            width: fit-content;
-            background-color: #2195f3cb;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-weight: bold;
-            margin-bottom: 20px;
-            cursor: pointer;
-        }
-        .total-books button:hover {
-            background-color: #3a75b0;
-        }
-        .total-books button.remove-row {
-            background-color: #f44336;
-            padding: 8px 12px;
-            margin-bottom: 0;
-        }
-        .total-books button.remove-row:hover {
-            background-color: #da190b;
-        }
-        .form-container form input[type="submit"]{
-            text-decoration: none;
-            color: white;
-            background-color: #2195f3cb;
-            padding: 10px 15px;
-            border-radius: 5px;
-            font-weight: bold;
-            margin-right: 10px;
-            border: none;
-        }
-        .form-container form input[type="submit"]:hover {
-            background-color: #3a75b0;
-        }
-        .form-container form a.cancel-btn {
-            text-decoration: none;
-            color: white;
-            background-color: #f44336;
-            padding: 10px 15px;
-            border-radius: 5px;
-            font-weight: bold;
-        }   
-        .form-container form a.cancel-btn:hover {
-            background-color: #d32f2f;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
@@ -237,7 +90,7 @@
             <form method="POST" action="">
                 <h2>Add Borrow Record</h2>
                 <?php if ($error): ?>
-                    <p style="color: red;"><?= htmlspecialchars($error) ?></p>
+                    <p class="error-msg"><?= htmlspecialchars($error) ?></p>
                 <?php endif; ?>
                 <div class="member-name-borrow-date">
                     <label for="member_id">Member:</label>
