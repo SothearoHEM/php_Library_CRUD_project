@@ -1,6 +1,3 @@
-/* ===========================
-   Global / Reset
-   =========================== */
 * {
     margin: 0;
     padding: 0;
@@ -11,9 +8,6 @@ body {
     background-color: #f0f0f0;
 }
 
-/* ===========================
-   Header
-   =========================== */
 .container {
     margin: 0 auto;
 }
@@ -48,18 +42,12 @@ body {
     background-color: #3a75b0;
 }
 
-/* ===========================
-   Error Message
-   =========================== */
 .error-msg {
     color: red;
     text-align: center;
     margin-top: 10px;
 }
 
-/* ===========================
-   Members List Page
-   =========================== */
 .member-container {
     width: 80%;
     display: flex;
@@ -99,6 +87,7 @@ body {
     background-color: white;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
     border-radius: 8px;
+    overflow-x: auto;
 }
 .member-container .member-list table {
     width: 100%;
@@ -141,9 +130,6 @@ body {
     background-color: #0b7dda;
 }
 
-/* ===========================
-   Add/Edit Member Form
-   =========================== */
 .add-members-form {
     display: flex;
     flex-direction: column;
@@ -200,9 +186,6 @@ body {
     background-color: #3a75b0;
 }
 
-/* ===========================
-   Books List Page
-   =========================== */
 .book-container {
     width: 80%;
     display: flex;
@@ -242,6 +225,7 @@ body {
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
     border-radius: 8px;
     width: 100%;
+    overflow-x: auto;
 }
 .book-container .book-list table {
     width: 100%;
@@ -287,9 +271,6 @@ body {
     background-color: #0b7dda;
 }
 
-/* ===========================
-   Add/Edit Book Form
-   =========================== */
 .add-books-form {
     display: flex;
     flex-direction: column;
@@ -344,9 +325,6 @@ body {
     background-color: #3a75b0;
 }
 
-/* ===========================
-   Borrows List Page
-   =========================== */
 .borrow-container {
     width: 80%;
     display: flex;
@@ -386,6 +364,7 @@ body {
     background-color: white;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
     border-radius: 8px;
+    overflow-x: auto;
 }
 .borrow-container .borrow-list table {
     width: 100%;
@@ -440,9 +419,6 @@ body {
     background-color: #da190b;
 }
 
-/* ===========================
-   Add Borrow Form
-   =========================== */
 .form-container {
     display: flex;
     flex-direction: column;
@@ -548,9 +524,6 @@ body {
     background-color: #d32f2f;
 }
 
-/* ===========================
-   Borrow Details Page
-   =========================== */
 .details-container {
     width: 80%;
     margin: 30px auto;
@@ -603,9 +576,6 @@ body {
     background-color: #3a75b0;
 }
 
-/* ===========================
-   DataTables Custom Styling
-   =========================== */
 .dataTables_wrapper {
     padding: 20px;
 }
@@ -680,7 +650,6 @@ table.dataTable.no-footer {
     border-bottom: none;
 }
 
-/* Books page DataTables accent override */
 .book-container .dataTables_wrapper .dataTables_length select:focus {
     border-color: #e06b21;
     box-shadow: 0 0 4px rgba(224, 107, 33, 0.3);
@@ -698,4 +667,112 @@ table.dataTable.no-footer {
     background: #e06b21 !important;
     color: #fff !important;
     border-color: #e06b21 !important;
+}
+
+@media (max-width: 992px) {
+    .container .header .header-container {
+        width: 95%;
+    }
+    .member-container,
+    .book-container,
+    .borrow-container {
+        width: 95%;
+    }
+    .details-container {
+        width: 95%;
+    }
+    .form-container form {
+        width: 95%;
+    }
+}
+
+@media (max-width: 768px) {
+    .container .header .header-container {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+    .container .header .menu {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
+    }
+    .container .header .menu a {
+        margin-left: 0;
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+    .container .header h1 {
+        font-size: 1.3rem;
+    }
+    .member-container .member-header,
+    .book-container .book-header,
+    .borrow-container .borrow-header {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+    .member-container .member-list table th,
+    .member-container .member-list table td,
+    .book-container .book-list table th,
+    .book-container .book-list table td,
+    .borrow-container .borrow-list table th,
+    .borrow-container .borrow-list table td,
+    .details-container th,
+    .details-container td {
+        padding: 8px 6px;
+        font-size: 13px;
+    }
+    .total-books .book-to-borrow {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+    .total-books .book-to-borrow select,
+    .total-books .book-to-borrow input[type="number"],
+    .total-books .book-to-borrow input[type="text"] {
+        width: 100%;
+        margin-right: 0;
+    }
+    .add-members-form form,
+    .add-books-form form {
+        margin: 0 10px;
+    }
+    .dataTables_wrapper {
+        padding: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container .header .menu a {
+        padding: 6px 10px;
+        font-size: 12px;
+    }
+    .container .header h1 {
+        font-size: 1.1rem;
+    }
+    .member-container .member-list table,
+    .book-container .book-list table,
+    .borrow-container .borrow-list table,
+    .details-container table {
+        font-size: 12px;
+    }
+    .member-container .member-list table th,
+    .member-container .member-list table td,
+    .book-container .book-list table th,
+    .book-container .book-list table td,
+    .borrow-container .borrow-list table th,
+    .borrow-container .borrow-list table td,
+    .details-container th,
+    .details-container td {
+        padding: 6px 4px;
+    }
+    .form-container form {
+        width: 100%;
+        padding: 15px;
+    }
+    .details-container {
+        padding: 15px;
+    }
 }
